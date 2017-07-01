@@ -55,16 +55,12 @@
                 this.success = false;
                 this.errors = {};
 
-                let config = {
-                    headers: {
-                        'Authorization': "Bearer " + this.$localStorage.get('token')
-                    }
-                };
 
                 axios.post('/user/settings', {
                     name: this.name,
                     email: this.email
-                }, config).then(response => {
+                }, { headers: { 'Authorization': "Bearer " + this.$localStorage.get('token') }
+                }).then(response => {
                     this.loading = false;
                     this.success = true;
 

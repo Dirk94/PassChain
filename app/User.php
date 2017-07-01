@@ -33,11 +33,11 @@ class User extends Authenticatable
         'name', 'email', 'password'
     ];
 
-    protected $guarded = [
-        'api_token'
-    ];
-
     protected $hidden = [
         'password'
     ];
+
+    public function passwords() {
+        return $this->hasMany('App\Password');
+    }
 }

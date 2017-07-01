@@ -21,6 +21,8 @@ Vue.use(VueLocalStorage), {
 
 Vue.component('navigation', require('./components/Navigation.vue'));
 Vue.component('spinner', require('./components/Spinner.vue'));
+Vue.component('passwords', require('./components/passwords/Passwords.vue'));
+Vue.component('add-password', require('./components/passwords/AddPassword.vue'));
 
 const routes = [
     { path: '', component: require('./components/pages/Welcome.vue') },
