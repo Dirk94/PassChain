@@ -8,8 +8,8 @@ Route::middleware('jwt-auth')->group(function() {
     Route::post('user/settings', 'UserController@update');
 
     Route::get('user/passwords', 'PasswordController@all');
-    Route::delete('user/password/{passwordObject}', 'PasswordController@delete');
-    Route::put('user/password/{passwordObject}', 'PasswordController@update');
+    Route::delete('user/password/{passwordObject}', 'PasswordController@delete')->middleware('password-permission');
+    Route::put('user/password/{passwordObject}', 'PasswordController@update')->middleware('password-permission');
     Route::post('user/password', 'PasswordController@store');
 });
 
