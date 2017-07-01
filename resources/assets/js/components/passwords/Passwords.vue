@@ -13,8 +13,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Your Passwords</div>
 
+                <transition name="fade" mode="out-in">
                 <div class="panel-body">
-                    <transition-group name="list" mode="out-in" tag="div">
+                    <transition-group name="fade" mode="out-in" tag="div">
                         <div v-for="pass in passwords" v-bind:key="pass" class="password-container">
                             <div class="info-container">
                                 <div class="title">{{ pass.url }}</div>
@@ -31,6 +32,7 @@
                         <p>Nothing to see here</p>
                     </div>
                 </div>
+                </transition>
             </div>
         </div>
 
@@ -130,15 +132,18 @@
             doDeletePassword() {
                 this.deleteLoading = true;
                 this.deleteError = '';
-                axios.delete("/user/password/" + this.deletePassword.id).then(response => {
-                    this.deleteLoading = false;
-                    this.passwords.splice(this.passwords.indexOf(this.deletePassword), 1);
+                axios.delete("/user/password/" + this.deletePassword.id, { headers: { 'Authorization': "Bearer " + this.$localStorage.get('token') } })
+                    .then(response => {
+                        this.deleteLoading = false;
+                        this.passwords.splice(this.passwords.indexOf(this.deletePassword), 1);
 
-                    $("#confirmModal").modal('hide');
-                }).catch(error => {
-                    this.deleteLoading = false;
-                    this.deleteError = error.response.data.message;
-                });
+                        $("#confirmModal").modal('hide');
+                    }).catch(error => {
+                        this.deleteLoading = false;
+                        if (Auth.isTokenValid(this, error)) {
+                            this.deleteError = error.response.data.message;
+                        }
+                    });
             },
 
             resetErrors() {
@@ -184,12 +189,13 @@
         margin-right: 6px;
     }
 
+
     .list-enter-active, .list-leave-active {
-        transition: all 1s;
+        transition: opacity 0.12s ease;
     }
     .list-enter, .list-leave-to {
+        transition: opacity 0.12s ease;
         opacity: 0;
-        transform: translateY(30px);
     }
 </style>
 

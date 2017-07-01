@@ -2596,6 +2596,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -2655,14 +2657,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.deleteLoading = true;
             this.deleteError = '';
-            axios.delete("/user/password/" + this.deletePassword.id).then(function (response) {
+            axios.delete("/user/password/" + this.deletePassword.id, { headers: { 'Authorization': "Bearer " + this.$localStorage.get('token') } }).then(function (response) {
                 _this.deleteLoading = false;
                 _this.passwords.splice(_this.passwords.indexOf(_this.deletePassword), 1);
 
                 $("#confirmModal").modal('hide');
             }).catch(function (error) {
                 _this.deleteLoading = false;
-                _this.deleteError = error.response.data.message;
+                if (Auth.isTokenValid(_this, error)) {
+                    _this.deleteError = error.response.data.message;
+                }
             });
         },
         resetErrors: function resetErrors() {
@@ -5147,7 +5151,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.password-container {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-bottom: 12px;\n    padding-bottom: 12px;\n    border-bottom: 1px solid rgb(211,224,233);\n}\n.password-container .title {\n    font-weight: 600;\n}\n.password-container p {\n    margin-bottom: 0;\n    margin-top: 0;\n}\n.info-container {\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n.button-container {\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n    width: 112px;\n}\ndiv.button-container button.edit {\n    margin-right: 6px;\n}\n.list-enter-active, .list-leave-active {\n    transition: all 1s;\n}\n.list-enter, .list-leave-to /* .list-leave-active for <2.1.8 */ {\n    opacity: 0;\n    -webkit-transform: translateY(30px);\n            transform: translateY(30px);\n}\n", ""]);
+exports.push([module.i, "\n.password-container {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-bottom: 12px;\n    padding-bottom: 12px;\n    border-bottom: 1px solid rgb(211,224,233);\n}\n.password-container .title {\n    font-weight: 600;\n}\n.password-container p {\n    margin-bottom: 0;\n    margin-top: 0;\n}\n.info-container {\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n.button-container {\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n    width: 112px;\n}\ndiv.button-container button.edit {\n    margin-right: 6px;\n}\n.list-enter-active, .list-leave-active {\n    transition: opacity 0.12s ease;\n}\n.list-enter, .list-leave-to {\n    transition: opacity 0.12s ease;\n    opacity: 0;\n}\n", ""]);
 
 /***/ }),
 /* 42 */
@@ -33092,11 +33096,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Your Passwords")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Your Passwords")]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade",
+      "mode": "out-in"
+    }
+  }, [_c('div', {
     staticClass: "panel-body"
   }, [_c('transition-group', {
     attrs: {
-      "name": "list",
+      "name": "fade",
       "mode": "out-in",
       "tag": "div"
     }
@@ -33144,7 +33153,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.passwords.length == 0),
       expression: "passwords.length == 0"
     }]
-  }, [_c('p', [_vm._v("Nothing to see here")])])], 1)])]), _vm._v(" "), _c('div', {
+  }, [_c('p', [_vm._v("Nothing to see here")])])], 1)])], 1)]), _vm._v(" "), _c('div', {
     staticClass: "modal fade",
     attrs: {
       "tabindex": "-1",
