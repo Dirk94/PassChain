@@ -1,8 +1,7 @@
 <template>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h1>Register</h1>
-        </div>
+        <div class="panel-heading">Settings</div>
+
         <div class="panel-body">
             <div class="form-horizontal">
                 <div class="form-group" v-bind:class="{ 'has-error': errors.name }">
@@ -21,27 +20,16 @@
                     </div>
                 </div>
 
-                <div class="form-group" v-bind:class="{ 'has-error': errors.password }">
-                    <label for="password" class="col-md-4 control-label">Password</label>
-                    <div class="col-md-6">
-                        <input v-model="password" type="password" id="password" class="form-control">
-                        <div v-if="errors.password" class="help-block"><strong>{{ errors.password[0] }}</strong></div>
-                    </div>
-                </div>
-
-                <div class="form-group" v-bind:class="{ 'has-error': errors.confirmPassword }">
-                    <label for="confirm-password" class="col-md-4 control-label">Confirm Password</label>
-                    <div class="col-md-6">
-                        <input v-model="confirmPassword" type="password" id="confirm-password" class="form-control">
-                        <div v-if="errors.confirmPassword" class="help-block"><strong>{{ errors.confirmPassword[0] }}</strong></div>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
                         <div>
-                            <button v-show="!loading" @click="submitRegister" type="button" class="btn btn-primary">Register</button>
+                            <div v-if="success">
+                                <div class="alert alert-success" role="alert">Changes saved.</div>
+                            </div>
+
+                            <button v-show="!loading" @click="submitSaveChanges" type="button" class="btn btn-primary">Save Changes</button>
                             <spinner v-show="loading"></spinner>
+
                         </div>
                     </div>
                 </div>
@@ -52,44 +40,50 @@
 
 <script>
     export default {
-
         data() {
             return {
                 loading: false,
-
+                success: false,
                 name: '',
                 email: '',
-                password: '',
-                confirmPassword: '',
-
                 errors: {}
             }
         },
-
         methods: {
-            submitRegister() {
+            submitSaveChanges() {
                 this.loading = true;
+                this.success = false;
                 this.errors = {};
 
-                if (this.password !== this.confirmPassword) {
-                    this.errors.confirmPassword = ["The passwords don't match."];
-                    return;
-                }
+                let config = {
+                    headers: {
+                        'Authorization': "Bearer " + this.$localStorage.get('token')
+                    }
+                };
 
-                axios.post('/user/register', {
+                axios.post('/user/settings', {
                     name: this.name,
-                    email: this.email,
-                    password: this.password
-                }).then(response => {
+                    email: this.email
+                }, config).then(response => {
                     this.loading = false;
+                    this.success = true;
 
                     let data = response.data;
-                    Auth.doLogin(this, data.token, data.name, data.email);
+                    this.$localStorage.set('name', data.name);
+                    this.$localStorage.set('email', data.email);
+                    this.$emit('updateuserdetails');
                 }).catch(error => {
                     this.loading = false;
-                    this.errors = error.response.data.errors;
+
+                    if (Auth.isTokenValid(this, error)) {
+                        this.errors = error.response.data.errors;
+                    }
                 });
             }
+        },
+        created: function() {
+            this.name = this.$localStorage.get('name');
+            this.email = this.$localStorage.get('email');
         }
     }
 </script>

@@ -57,13 +57,8 @@
                 }).then(response => {
                     this.loading = false;
 
-                    this.$localStorage.set('token', response.data.token);
-                    this.$localStorage.set('name', response.data.name);
-                    this.$localStorage.set('email', response.data.email);
-
-                    this.$emit('updateuserdetails');
-
-                    this.$router.push('/account');
+                    let data = response.data;
+                    Auth.doLogin(this, data.token, data.name, data.email);
                 }).catch(error => {
                     this.loading = false;
                     this.error = error.response.data.error;

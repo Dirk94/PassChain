@@ -27,7 +27,7 @@
                     <li v-if="!loggedIn"><router-link to="/login">Login</router-link></li>
                     <li v-if="!loggedIn"><router-link to="/register">Register</router-link></li>
 
-                    <li v-if="loggedIn"><router-link to="/account">{{ name }}</router-link></li>
+                    <li v-if="loggedIn"><router-link to="/user">{{ name }}</router-link></li>
                     <li v-if="loggedIn"><a @click="submitLogout()">Logout</a></li>
                 </ul>
             </div>

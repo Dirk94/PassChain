@@ -18,8 +18,10 @@
     <navigation :logged-in="loggedIn" :name="name" v-on:updateuserdetails="updateUserDetails()"></navigation>
 
     <div class="container">
-        <div class="col-md-10 col-md-offset-1 col-sm-12">
-            <router-view v-on:updateuserdetails="updateUserDetails()"></router-view>
+        <div class="col-lg-12 col-md-12">
+            <transition name="fade" mode="out-in">
+                <router-view v-on:updateuserdetails="updateUserDetails()" :propname="name" :propemail="email"></router-view>
+            </transition>
         </div>
     </div>
 </div>

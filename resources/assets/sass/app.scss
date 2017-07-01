@@ -12,3 +12,18 @@ h1 {
   font-size: 20px;
   margin-top: 15px;
 }
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity 0.12s ease;
+}
+
+.fade-leave {}
+
+.fade-leave-active {
+  transition: opacity 0.12s ease;
+  opacity: 0;
+}
