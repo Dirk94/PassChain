@@ -21,8 +21,6 @@ class UserController extends Controller {
     }
 
     public function update(Request $request) {
-        return response()->json(['error' => 'Token is invalid.'], 401);
-
         $validatorRules = [
             'name' => 'required|min:3|max:255'
         ];
