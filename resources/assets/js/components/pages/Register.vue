@@ -32,7 +32,7 @@
                 <div class="form-group" v-bind:class="{ 'has-error': errors.confirmPassword }">
                     <label for="confirm-password" class="col-md-4 control-label">Confirm Password</label>
                     <div class="col-md-6">
-                        <input v-model="confirmPassword" type="password" id="confirm-password" class="form-control">
+                        <input v-model="confirmPassword" type="password" id="confirm-password" class="form-control" @keydown.enter="submitRegister">
                         <div v-if="errors.confirmPassword" class="help-block"><strong>{{ errors.confirmPassword[0] }}</strong></div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
                 <div class="form-group" v-bind:class="{ 'has-error': errors.name }">
                     <label for="name" class="col-md-4 control-label">Name</label>
                     <div class="col-md-6">
-                        <input v-model="name" type="text" id="name" class="form-control">
+                        <input v-model="name" type="text" id="name" class="form-control" @keydown.enter="submitSaveChanges">
                         <div v-if="errors.name" class="help-block"><strong>{{ errors.name[0] }}</strong></div>
                     </div>
                 </div>
@@ -15,7 +15,7 @@
                 <div class="form-group" v-bind:class="{ 'has-error': errors.email }">
                     <label for="email" class="col-md-4 control-label">Email</label>
                     <div class="col-md-6">
-                        <input v-model="email" type="text" id="email" class="form-control">
+                        <input v-model="email" type="text" id="email" class="form-control" @keydown.enter="submitSaveChanges">
                         <div v-if="errors.email" class="help-block"><strong>{{ errors.email[0] }}</strong></div>
                     </div>
                 </div>

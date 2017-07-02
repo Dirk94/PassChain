@@ -83,6 +83,10 @@ const app = new Vue({
             this.loggedIn = true;
             this.name = this.$localStorage.get('name');
             this.email = this.$localStorage.get('email');
+        } else {
+            this.loggedIn = false;
+            this.name = '';
+            this.email = '';
         }
     }
 });

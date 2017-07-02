@@ -1186,6 +1186,10 @@ var app = new Vue({
             this.loggedIn = true;
             this.name = this.$localStorage.get('name');
             this.email = this.$localStorage.get('email');
+        } else {
+            this.loggedIn = false;
+            this.name = '';
+            this.email = '';
         }
     }
 });
@@ -2167,7 +2171,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.error = error.response.data.error;
             });
         }
+    },
+    created: function created() {
+        this.$emit('updateuserdetails');
     }
+
 });
 
 /***/ }),
@@ -33538,6 +33546,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.password)
     },
     on: {
+      "keydown": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.submitLogin($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.password = $event.target.value
@@ -33903,6 +33915,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.confirmPassword)
     },
     on: {
+      "keydown": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.submitRegister($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.confirmPassword = $event.target.value
@@ -33990,6 +34006,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.name)
     },
     on: {
+      "keydown": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.submitSaveChanges($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.name = $event.target.value
@@ -34025,6 +34045,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.email)
     },
     on: {
+      "keydown": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.submitSaveChanges($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.email = $event.target.value

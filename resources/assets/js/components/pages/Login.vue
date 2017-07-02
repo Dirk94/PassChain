@@ -16,7 +16,7 @@
                 <div class="form-group" v-bind:class="{ 'has-error': error != '' }">
                     <label for="password" class="col-md-4 control-label">Password</label>
                     <div class="col-md-6">
-                        <input v-model="password" type="password" id="password" class="form-control">
+                        <input v-model="password" type="password" id="password" class="form-control" @keydown.enter="submitLogin">
                         <div v-if="error" class="help-block"><strong>{{ error }}</strong></div>
                     </div>
                 </div>
@@ -64,6 +64,10 @@
                     this.error = error.response.data.error;
                 });
             }
+        },
+        created: function() {
+            this.$emit('updateuserdetails');
         }
+
     }
 </script>
