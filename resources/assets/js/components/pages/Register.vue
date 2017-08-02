@@ -73,6 +73,7 @@
 
                 if (this.password !== this.confirmPassword) {
                     this.errors.confirmPassword = ["The passwords don't match."];
+                    this.loading = false;
                     return;
                 }
 

@@ -2261,6 +2261,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (this.password !== this.confirmPassword) {
                 this.errors.confirmPassword = ["The passwords don't match."];
+                this.loading = false;
                 return;
             }
 
@@ -33702,7 +33703,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_c('h1', [_vm._v("Welcome to PassChain")])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_c('p', [_vm._v("Store all your passwords in a single secure location!")])])])
+  }, [_c('p', [_vm._v("Store all your passwords in a single secure location!")]), _vm._v(" "), _c('p', {
+    staticClass: "alert-danger"
+  }, [_vm._v("\n            This is a learning project. Use at your own risk.\n        ")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
